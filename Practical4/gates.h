@@ -27,8 +27,8 @@ int in_names(char* name, Names names);
 void do_for_all_subsets(Names suffix, Names* end, Names* subset, void (*action)(Names));
 void print_all_subsets(Names names);
 void process_line(char* line);
-Wire getOutput(Gate gate);
-Gate make_AND(Wire input1, Wire input2);
+Wire get_output(Gate gate);
+Gate make_gate(Wire input1, Wire input2, char* name);
 
 
 #endif
