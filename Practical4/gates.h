@@ -1,12 +1,12 @@
 #ifndef HEADER
 #define HEADER
+#include <stdbool.h>
 
-/* Node in list of names.
- */
-typedef struct names {
-	char* name;
-	struct names* next;
-} *Names;
+#define NUM_TOKENS 4
+#define OUTPUT 0
+#define OPERATOR 1
+#define INPUT_ONE 2
+#define INPUT_TWO 3
 
 typedef struct Wire {
     char* name;
@@ -15,20 +15,16 @@ typedef struct Wire {
 
 typedef struct Gate {
     char* op;
-    Wire output;
-    Wire inputs[2];
+    Wire* output;
+    Wire* input1;
+	Wire* input2;
 } Gate;
 
-Wire make_wire(char* str, int value);
-Names make_names(char* name, Names next);
-void free_names(Names names);
-void print_names(Names names);
-int in_names(char* name, Names names);
-void do_for_all_subsets(Names suffix, Names* end, Names* subset, void (*action)(Names));
-void print_all_subsets(Names names);
-void process_line(char* line);
-Wire get_output(Gate gate);
-Gate make_gate(Wire input1, Wire input2, char* name);
-
+Wire* make_wire(char* str, int value);
+void tokenize_line(char* line, char* inputs[]);
+Wire* get_output(Gate gate, char* output);
+Gate make_gate(char* output, char* operator, Wire* input1, Wire* input2);
+bool valid_operator(char* operator);
+bool valid_expression(char* expression[]);
 
 #endif

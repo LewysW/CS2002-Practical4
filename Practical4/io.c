@@ -1,0 +1,46 @@
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include "gates.h"
+
+const char* VALID_OPERATORS[8] = {"NOT", "AND", "OR", "NAND", "NOR", "XOR", "NOT", "IN"};
+//Gets maximum of four tokens from input line
+void tokenize_line(char* line, char* inputs[]) {
+	const char seps[2] = " ";
+	int index = 0;
+
+	for (int i = 0; i < NUM_TOKENS; i++) {
+		inputs[i] = NULL;
+	}
+
+	inputs[index++] = strtok(line, seps);
+	while ((inputs[index++] = strtok(NULL, seps)) != NULL);
+
+	//printf("%s, %s, %s, %s\n", inputs[0], inputs[1], inputs[2], inputs[3]);
+
+	for (int i = 0; i < NUM_TOKENS; i++) {
+		if (inputs[i] != NULL)
+			printf("%s\n", inputs[i]);
+	}
+}
+
+//Checks that an operator is valid
+bool valid_operator(char* operator) {
+	for (unsigned int i = 0; i < sizeof(VALID_OPERATORS) / sizeof(VALID_OPERATORS[0]); i++) {
+		if (!strcmp(operator, VALID_OPERATORS[i])) return true;
+	}
+
+	return false;
+}
+
+//Checks that an expression is valid
+bool valid_expression(char* expression[]) {
+	if (!valid_operator(expression[OPERATOR])) return false;
+
+	if (!strcmp("IN", expression[OPERATOR]) && expression[INPUT_ONE] != NULL) return false;
+
+	if (!strcmp("NOT", expression[OPERATOR]) && expression[INPUT_TWO] != NULL) return false;
+
+	return true;
+}

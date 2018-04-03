@@ -1,72 +1,105 @@
+#define _GNU_SOURCE
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "gates.h"
 
-static const Wire zero = {"zero", 0};
-static const Wire one = {"one", 1};
+//Sets values for one and zero wires
+Wire zero_wire = {"zero", 0};
+Wire one_wire = {"one", 1};
 
-Wire make_wire(char* str, int value) {
-	Wire wire;
-	wire.name = malloc(sizeof(str));
-	wire.name = str;
-	wire.value = value;
+Wire* zero = &zero_wire;
+Wire* one =  &one_wire;
+
+//Initialises a wire*
+Wire* make_wire(char* str, int value) {
+	Wire* wire = malloc(sizeof(Wire));
+	wire->name = str;
+	wire->value = value;
 	return wire;
 }
 
-Gate make_gate(Wire input1, Wire input2, char* name) {
+//Initialises a gate struct
+Gate make_gate(char* output, char* operator, Wire* input1, Wire* input2) {
     Gate gate;
-    gate.op = malloc(sizeof(name));
-    gate.op = name;
+    gate.op = malloc(sizeof(operator));
+    gate.op = operator;
 
-    gate.inputs[0] = input1;
-    if (name != "NOT") gate.inputs[1] = input2;
+	if (strcmp(operator, "IN")) {
+		gate.input1 = malloc(sizeof(Wire));
+	    gate.input1 = input1;
+	}
 
-    gate.output = get_output(gate);
+    if (strcmp(operator, "NOT")) {
+		gate.input2 = malloc(sizeof(Wire));
+		gate.input2 = input2;
+	}
+
+    gate.output = (get_output(gate, output));
     return gate;
 }
 
-Wire get_output(Gate gate) {
+//Gets the output of a gate based on the operator name
+Wire* get_output(Gate gate, char* output) {
     int value;
 
-    if (gate.op == "NOT") {
-        value = !(gate.inputs[0].value);
-        return make_wire("out", value);
-    } else if (gate.op == "AND") {
-        value = (gate.inputs[0].value && gate.inputs[1].value);
-        return make_wire("out", value);
-    } else if (gate.op == "OR") {
-        value = (gate.inputs[0].value || gate.inputs[1].value);
-        return make_wire("out", value);
-    } else if (gate.op == "NAND") {
-        value = !(gate.inputs[0].value && gate.inputs[1].value);
-        return make_wire("out", value);
-    } else if (gate.op == "NOR") {
-        value = !(gate.inputs[0].value || gate.inputs[1].value);
-        return make_wire("out", value);
-    }  else if (gate.op == "XOR") {
-        value = (gate.inputs[0].value ^ gate.inputs[1].value);
-        return make_wire("out", value);
-    } else if (gate.op == "EQ") {
-        value = (!(gate.inputs[0].value) || (gate.inputs[1].value));
-        return make_wire("out", value);
-    }
+    if (!strcmp(gate.op, "NOT")) {
+        value = !(gate.input1->value);
+        return make_wire(output, value);
+    } else if (!strcmp(gate.op, "AND")) {
+        value = (gate.input1->value && gate.input2->value);
+        return make_wire(output, value);
+    } else if (!strcmp(gate.op, "OR")) {
+        value = (gate.input1->value || gate.input2->value);
+        return make_wire(output, value);
+    } else if (!strcmp(gate.op, "NAND")) {
+        value = !(gate.input1->value && gate.input2->value);
+        return make_wire(output, value);
+    } else if (!strcmp(gate.op, "NOR")) {
+        value = !(gate.input1->value || gate.input2->value);
+        return make_wire(output, value);
+    }  else if (!strcmp(gate.op, "XOR")) {
+        value = (gate.input1->value ^ gate.input2->value);
+        return make_wire(output, value);
+    } else if (!strcmp(gate.op, "NOT")) {
+        value = !(gate.input1->value ^ gate.input2->value);
+        return make_wire(output, value);
+    } else if (!strcmp(gate.op, "IN")) {
+		return make_wire(output, -1); //Default value for IN
+	}
 
     //Add assert or error message here.
-    return;
+    return NULL;
 }
+
 
 /* Read lines from standard input, until user types Ctrl-D.
  */
-int main(void) {
+int main(int argc, char *argv[]) {
+	FILE* stream;
+	if (argc == 1) {
+		stream = stdin;
+	} else {
+		stream = fopen(argv[0], "r");
+	}
+
+	char** inputs;
 	char* line = NULL;
 	size_t len = 0;
-	while (getline(&line, &len, stdin) != -1)
-		process_line(line);
+	while (getline(&line, &len, stdin) != -1) {
+		tokenize_line(line, inputs);
+		printf("%d\n", valid_expression(inputs));
+	}
+
 	free(line);
 
+
     Gate gate;
-    gate = make_gate(one, zero, "NOT");
-    printf("Output: %d\n", gate.output.value);
+    gate = make_gate("out", "AND", one, one);
+    printf("Output: %s, Operator: %s, Input1: %s, Input2: %s\n", gate.output->name, gate.op, gate.input1->name, gate.input2->name);
+	printf("%d\n", gate.output->value);
+
     return 0;
 }
