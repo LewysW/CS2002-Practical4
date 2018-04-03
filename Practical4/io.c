@@ -16,13 +16,6 @@ void tokenize_line(char* line, char* inputs[]) {
 
 	inputs[index++] = strtok(line, seps);
 	while ((inputs[index++] = strtok(NULL, seps)) != NULL);
-
-	//printf("%s, %s, %s, %s\n", inputs[0], inputs[1], inputs[2], inputs[3]);
-
-	for (int i = 0; i < NUM_TOKENS; i++) {
-		if (inputs[i] != NULL)
-			printf("%s\n", inputs[i]);
-	}
 }
 
 //Checks that an operator is valid
