@@ -90,16 +90,16 @@ int main(int argc, char *argv[]) {
 	size_t len = 0;
 	while (getline(&line, &len, stdin) != -1) {
 		tokenize_line(line, inputs);
-		printf("%d\n", valid_expression(inputs));
+
+		if (valid_expression(inputs)) {
+			Gate gate;
+		    gate = make_gate(*(inputs + OUTPUT), *(inputs + OPERATOR), one, one);
+			printf("Output: %s, Operator: %s, Input1: %s, Input2: %s\n", gate.output->name, gate.op, gate.input1->name, gate.input2->name);
+			printf("%d\n", gate.output->value);
+		}
 	}
 
 	free(line);
-
-
-    Gate gate;
-    gate = make_gate("out", "AND", one, one);
-    printf("Output: %s, Operator: %s, Input1: %s, Input2: %s\n", gate.output->name, gate.op, gate.input1->name, gate.input2->name);
-	printf("%d\n", gate.output->value);
 
     return 0;
 }
