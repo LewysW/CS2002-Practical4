@@ -18,23 +18,17 @@ Node wires = NULL;
 //Initialises a wire*
 Wire* make_wire(char* str, int value) {
 	Wire* wire = malloc(sizeof(Wire));
-	wire->name = malloc(sizeof(str));
-	wire->name = str;
+	wire->name = strdup(str);
 	wire->value = value;
 	return wire;
 }
 
 Wire* get_wire(char* wireStr) {
-	//TODO - WRONG FOR SECOND TERM INPUTS
-	printf("%d\n", contains(wires, wireStr));
 	if (!contains(wires, wireStr)) {
-		printf("Called\n");
 		Wire* wire = make_wire(wireStr, -1);
 		wires = addNode(wires, wire);
-		printf("%d\n", contains(wires, wireStr));
 		return wire;
 	} else {
-		printf("hello");
 		return getNode(wires, wireStr);
 	}
 }
@@ -42,8 +36,7 @@ Wire* get_wire(char* wireStr) {
 //Initialises a gate struct
 Gate make_gate(char* output, char* operator, char* input1, char* input2) {
     Gate gate;
-    gate.op = malloc(sizeof(operator));
-    gate.op = operator;
+    gate.op = strdup(operator);
 
 	if (strcmp(operator, "IN")) {
 		gate.input1 = malloc(sizeof(Wire));
@@ -59,6 +52,7 @@ Gate make_gate(char* output, char* operator, char* input1, char* input2) {
     return gate;
 }
 
+//TODO change make_wire for output wire to get_wire
 //Gets the output of a gate based on the operator name
 Wire* get_output(Gate gate, char* output) {
     int value;
@@ -113,14 +107,11 @@ int main(int argc, char *argv[]) {
 
 
 		if (valid_expression(inputs)) {
-			//TODO change last two parameters to char* and make wires in make_gate
-		    Gate gate = make_gate(*(inputs + OUTPUT), *(inputs + OPERATOR), *(inputs + INPUT_ONE), *(inputs + INPUT_TWO));
+			Gate gate = make_gate(*(inputs + OUTPUT), *(inputs + OPERATOR), *(inputs + INPUT_ONE), *(inputs + INPUT_TWO));
 		}
-
-		//TODO - fix error in linked list with input variables
-		printList(wires);
 	}
 
+	printList(wires);
 	free(line);
     return 0;
 }

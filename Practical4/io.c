@@ -7,7 +7,7 @@
 const char* VALID_OPERATORS[8] = {"NOT", "AND", "OR", "NAND", "NOR", "XOR", "NOT", "IN"};
 //Gets maximum of four tokens from input line
 void tokenize_line(char* line, char* inputs[]) {
-	const char seps[2] = " ";
+	const char seps[3] = "  \n";
 	int index = 0;
 
 	for (int i = 0; i < NUM_TOKENS; i++) {
