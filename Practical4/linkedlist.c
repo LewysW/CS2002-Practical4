@@ -10,7 +10,7 @@ to help implement struct, addNode and createNode
 */
 
 //Creates a new node
-Node createNode() {
+Node createNode(void) {
     Node newNode;
     //Allocates memory for node
     newNode = malloc(sizeof(struct LinkedList));
@@ -88,10 +88,9 @@ void freeList(Node node) {
     if (newNode != NULL) freeList(newNode);
 }
 
-void printList(Node node) {
+void printLinkedList(Node node) {
     if (node != NULL) {
         Node newNode = node->next;
-        printf("%s\n", node->wire->name);
-        if (newNode != NULL) printList(newNode);
+        if (newNode != NULL) printLinkedList(newNode);
     }
 }

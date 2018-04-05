@@ -6,26 +6,25 @@
 #include <stdbool.h>
 #include "gates.h"
 
-//Sets values for one and zero wires
-Wire zero_wire = (Wire){"zero", 0};
-Wire one_wire = (Wire){"one", 1};
+//Sets vals for one and zero wires
+Wire zero_wire = (Wire){"zero", 0, 0};
+Wire one_wire = (Wire){"one", 1, 1};
 
 Wire* zero = &zero_wire;
 Wire* one =  &one_wire;
 
-Node wires = NULL;
-
 //Initialises a wire*
-Wire* make_wire(char* str, int value) {
+Wire* make_wire(char* str, int val) {
 	Wire* wire = malloc(sizeof(Wire));
 	wire->name = strdup(str);
-	wire->value = value;
+	wire->val = val;
+	wire->nextVal = 0;
 	return wire;
 }
 
 Wire* get_wire(char* wireStr) {
 	if (!contains(wires, wireStr)) {
-		Wire* wire = make_wire(wireStr, -1);
+		Wire* wire = make_wire(wireStr, 0);
 		wires = addNode(wires, wire);
 		return wire;
 	} else {
@@ -36,6 +35,11 @@ Wire* get_wire(char* wireStr) {
 //Initialises a gate struct
 Gate make_gate(char* output, char* operator, char* input1, char* input2) {
     Gate gate;
+	gate.output = NULL;
+	gate.op = NULL;
+	gate.input1 = NULL;
+	gate.input2 = NULL;
+
     gate.op = strdup(operator);
 
 	if (strcmp(operator, "IN")) {
@@ -43,75 +47,74 @@ Gate make_gate(char* output, char* operator, char* input1, char* input2) {
 		gate.input1 = get_wire(input1);
 	}
 
-    if (strcmp(operator, "NOT")) {
+    if (strcmp(operator, "NOT") && strcmp(operator, "IN")) {
 		gate.input2 = malloc(sizeof(Wire));
 		gate.input2 = get_wire(input2);
 	}
 
-    gate.output = (get_output(gate, output));
+    gate.output = (get_wire(output));
+
     return gate;
 }
 
-//TODO change make_wire for output wire to get_wire
 //Gets the output of a gate based on the operator name
-Wire* get_output(Gate gate, char* output) {
-    int value;
+Gate get_output(Gate prev) {
+    int val;
+	Gate gate = prev;
 
     if (!strcmp(gate.op, "NOT")) {
-        value = !(gate.input1->value);
-        return make_wire(output, value);
+        gate.output->val = !(gate.input1->val);
     } else if (!strcmp(gate.op, "AND")) {
-        value = (gate.input1->value && gate.input2->value);
-        return make_wire(output, value);
+        gate.output->val = (gate.input1->val && gate.input2->val);
     } else if (!strcmp(gate.op, "OR")) {
-        value = (gate.input1->value || gate.input2->value);
-        return make_wire(output, value);
+        gate.output->val = (gate.input1->val || gate.input2->val);
     } else if (!strcmp(gate.op, "NAND")) {
-        value = !(gate.input1->value && gate.input2->value);
-        return make_wire(output, value);
+        gate.output->val = !(gate.input1->val && gate.input2->val);
     } else if (!strcmp(gate.op, "NOR")) {
-        value = !(gate.input1->value || gate.input2->value);
-        return make_wire(output, value);
+        gate.output->val = !(gate.input1->val || gate.input2->val);
     }  else if (!strcmp(gate.op, "XOR")) {
-        value = (gate.input1->value ^ gate.input2->value);
-        return make_wire(output, value);
-    } else if (!strcmp(gate.op, "NOT")) {
-        value = !(gate.input1->value ^ gate.input2->value);
-        return make_wire(output, value);
+        gate.output->val = (gate.input1->val ^ gate.input2->val);
+    } else if (!strcmp(gate.op, "EQ")) {
+        gate.output->val = !(gate.input1->val ^ gate.input2->val);
     } else if (!strcmp(gate.op, "IN")) {
-		return make_wire(output, -1); //Default value for IN
+		gate.output->val = 0;
 	}
 
-    //Add assert or error message here.
-    return NULL;
+	return gate;
 }
 
 
 /* Read lines from standard input, until user types Ctrl-D.
  */
-int main(int argc, char *argv[]) {
-	FILE* stream;
-	if (argc == 1) {
-		stream = stdin;
-	} else {
-		stream = fopen(argv[1], "r");
-	}
+int main(void) {
+
+	//Creates a custom array list to store the gates
+	ArrayList gateList = createList(DEFAULT_CAPACITY);
+	wires = addNode(wires, one);
+	wires = addNode(wires, zero);
 
 	char** inputs;
 	char* line = NULL;
 	size_t len = 0;
+	int index = 0;
 
 	//TODO - CHANGE stdin TO STREAM TO ALLOW FOR EITHER USER INPUT OR FILE IO
 	while (getline(&line, &len, stdin) != -1) {
+		inputs = malloc(sizeof(char*) * NUM_TOKENS);
 		tokenize_line(line, inputs);
 
-
-		if (valid_expression(inputs)) {
-			Gate gate = make_gate(*(inputs + OUTPUT), *(inputs + OPERATOR), *(inputs + INPUT_ONE), *(inputs + INPUT_TWO));
+		if (valid_expression(inputs, gateList)) {
+			gateList = arrayListAdd(gateList, make_gate(*(inputs + OUTPUT), *(inputs + OPERATOR), *(inputs + INPUT_ONE), *(inputs + INPUT_TWO)));
+			gateList.gates[index] = get_output(gateList.gates[index]);
+			printf("Output: %d\n", gateList.gates[index++].output->val);
+		} else {
+			printf("Invalid Input\n");
 		}
 	}
 
-	printList(wires);
+	free(inputs);
+	printLinkedList(wires);
+	printArrayList(gateList);
 	free(line);
     return 0;
 }

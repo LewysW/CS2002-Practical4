@@ -1,5 +1,5 @@
-circuits: circuits.o io.o linkedlist.o
-	gcc -std=c99 -Wall -Wextra -g circuits.o io.o linkedlist.o -o circuits
+circuits: circuits.o io.o linkedlist.o arraylist.o
+	gcc -std=c99 -Wall -Wextra -g circuits.o io.o linkedlist.o arraylist.o -o circuits
 
 io.o: io.c gates.h
 	 gcc -std=c99 -Wall -Wextra -g io.c -c -o io.o
@@ -10,5 +10,8 @@ circuits.o: circuits.c gates.h
 linkedlist.o: linkedlist.c gates.h
 	 gcc -std=c99 -Wall -Wextra -g linkedlist.c -c -o linkedlist.o
 
+arraylist.o: arraylist.c gates.h
+	 gcc -std=c99 -Wall -Wextra -g arraylist.c -c -o arraylist.o
+
 clean:
-	rm *.o circuits
+	rm -f *.o circuits

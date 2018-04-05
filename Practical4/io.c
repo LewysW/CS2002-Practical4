@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "gates.h"
 
-const char* VALID_OPERATORS[8] = {"NOT", "AND", "OR", "NAND", "NOR", "XOR", "NOT", "IN"};
+const char* VALID_OPERATORS[8] = {"NOT", "AND", "OR", "NAND", "NOR", "XOR", "EQ", "IN"};
 //Gets maximum of four tokens from input line
 void tokenize_line(char* line, char* inputs[]) {
 	const char seps[3] = "  \n";
@@ -28,8 +28,18 @@ bool valid_operator(char* operator) {
 }
 
 //Checks that an expression is valid
-bool valid_expression(char* expression[]) {
+bool valid_expression(char* expression[], ArrayList gateList) {
 	if (!valid_operator(expression[OPERATOR])) return false;
+
+	Wire* wire = getNode(wires, expression[OUTPUT]);
+
+
+	if (wire != NULL) {
+		for (int i = 0; i < gateList.size; i++) {
+			if (gateList.gates[i].output == wire)
+				return false;
+		}
+	}
 
 	if (!strcmp("IN", expression[OPERATOR]) && expression[INPUT_ONE] != NULL) return false;
 
