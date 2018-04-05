@@ -58,30 +58,35 @@ Gate make_gate(char* output, char* operator, char* input1, char* input2) {
 }
 
 //Gets the output of a gate based on the operator name
-Gate get_output(Gate prev) {
+int get_output(Gate prev) {
     int val;
 	Gate gate = prev;
 
-    if (!strcmp(gate.op, "NOT")) {
-        gate.output->val = !(gate.input1->val);
-    } else if (!strcmp(gate.op, "AND")) {
-        gate.output->val = (gate.input1->val && gate.input2->val);
-    } else if (!strcmp(gate.op, "OR")) {
-        gate.output->val = (gate.input1->val || gate.input2->val);
-    } else if (!strcmp(gate.op, "NAND")) {
-        gate.output->val = !(gate.input1->val && gate.input2->val);
-    } else if (!strcmp(gate.op, "NOR")) {
-        gate.output->val = !(gate.input1->val || gate.input2->val);
-    }  else if (!strcmp(gate.op, "XOR")) {
-        gate.output->val = (gate.input1->val ^ gate.input2->val);
-    } else if (!strcmp(gate.op, "EQ")) {
-        gate.output->val = !(gate.input1->val ^ gate.input2->val);
-    } else if (!strcmp(gate.op, "IN")) {
-		gate.output->val = 0;
+    if (!strcmp(gate.op, "NOT")) return !(gate.input1->val);
+    else if (!strcmp(gate.op, "AND")) return (gate.input1->val && gate.input2->val);
+    else if (!strcmp(gate.op, "OR")) return (gate.input1->val || gate.input2->val);
+    else if (!strcmp(gate.op, "NAND")) return !(gate.input1->val && gate.input2->val);
+	else if (!strcmp(gate.op, "NOR")) return !(gate.input1->val || gate.input2->val);
+    else if (!strcmp(gate.op, "XOR")) return (gate.input1->val ^ gate.input2->val);
+    else if (!strcmp(gate.op, "EQ")) return !(gate.input1->val ^ gate.input2->val);
+	else if (!strcmp(gate.op, "IN")) return gate.output->val;
+	//TODO - change IN for all combinations of inputs
+	return -1;
+}
+
+ArrayList compute_state(ArrayList gateList) {
+	for (int i = 0; i < gateList.size; i++) {
+		gateList.gates[i].output->nextVal = get_output(gateList.gates[i]);
 	}
 
-	return gate;
+	for (int i = 0; i < gateList.size; i++) {
+		gateList.gates[i].output->val = gateList.gates[i].output->nextVal;
+	}
+
+	return gateList;
 }
+
+
 
 
 /* Read lines from standard input, until user types Ctrl-D.
@@ -105,11 +110,16 @@ int main(void) {
 
 		if (valid_expression(inputs, gateList)) {
 			gateList = arrayListAdd(gateList, make_gate(*(inputs + OUTPUT), *(inputs + OPERATOR), *(inputs + INPUT_ONE), *(inputs + INPUT_TWO)));
-			gateList.gates[index] = get_output(gateList.gates[index]);
-			printf("Output: %d\n", gateList.gates[index++].output->val);
 		} else {
 			printf("Invalid Input\n");
 		}
+	}
+
+	//TODO - change loop condition for stabilisation or upper bound of iterations
+	while (index < 20) {
+		gateList = compute_state(gateList);
+		printf("%s: %d\n", gateList.gates[index % 4].output->name ,gateList.gates[index % 4].output->val);
+		index++;
 	}
 
 	free(inputs);

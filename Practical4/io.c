@@ -31,8 +31,9 @@ bool valid_operator(char* operator) {
 bool valid_expression(char* expression[], ArrayList gateList) {
 	if (!valid_operator(expression[OPERATOR])) return false;
 
-	Wire* wire = getNode(wires, expression[OUTPUT]);
+	if (!strcmp(expression[OUTPUT], "one") || !strcmp(expression[OUTPUT], "zero")) return false;
 
+	Wire* wire = getNode(wires, expression[OUTPUT]);
 
 	if (wire != NULL) {
 		for (int i = 0; i < gateList.size; i++) {

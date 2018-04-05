@@ -40,7 +40,7 @@ Node wires;
 
 Wire* make_wire(char* str, int value);
 void tokenize_line(char* line, char* inputs[]);
-Gate get_output(Gate prev);
+int get_output(Gate prev);
 Gate make_gate(char* output, char* operator, char* input1, char* input2);
 Wire* get_wire(char* wireStr);
 bool valid_operator(char* operator);
@@ -56,5 +56,6 @@ ArrayList arrayListAdd(ArrayList list, Gate gate);
 ArrayList arrayListExpand(ArrayList list);
 ArrayList createList(int capacity);
 void printArrayList(ArrayList list);
+ArrayList compute_state(ArrayList gateList);
 
 #endif
