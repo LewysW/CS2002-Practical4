@@ -1,10 +1,9 @@
-#define _GNU_SOURCE //Included to avoid implicit getline declaration
-
+ //Included to avoid implicit getline declaration
+#define _GNU_SOURCE
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <math.h>
 #include "gates.h"
 
 //Sets vals for one and zero wires
@@ -88,6 +87,7 @@ ArrayList assign_next_state(ArrayList gateList) {
 	return gateList;
 }
 
+//TODO -move to IO
 void print_state(ArrayList gateList, bool isStable) {
 	for (int i = 0; i < gateList.size; i++) {
 		if (!strcmp(gateList.gates[i].op, "IN")) {
@@ -148,22 +148,10 @@ int get_num_IN(ArrayList gateList) {
 	return numIN;
 }
 
-
-
-
-/* Read lines from standard input, until user types Ctrl-D.
- */
-int main(void) {
-
-	//Creates a custom array list to store the gates
-	ArrayList gateList = createArrayList(DEFAULT_CAPACITY);
-	wires = addNode(wires, one);
-	wires = addNode(wires, zero);
-
+ArrayList generate_circuit(ArrayList gateList) {
 	char** inputs;
 	char* line = NULL;
 	size_t len = 0;
-	int index = 0;
 
 	while (getline(&line, &len, stdin) != -1) {
 		inputs = malloc(sizeof(char*) * NUM_TOKENS);
@@ -179,30 +167,27 @@ int main(void) {
 		free(inputs);
 	}
 
+	return gateList;
+}
+
+
+/* Read lines from standard input, until user types Ctrl-D.
+ */
+int main(void) {
+
+	//Creates a custom array list to store the gates
+	ArrayList gateList = createArrayList(DEFAULT_CAPACITY);
+	wires = addNode(wires, one);
+	wires = addNode(wires, zero);
+
+	gateList = generate_circuit(gateList);
+	output_truth_table(gateList);
+
 	//TODO - change loop condition for stabilisation or upper bound of iterations
 	//TODO - print properly (display 0 or ? if no out value)
 	//TODO - separate code into files
 	//TODO - comments
-	int numWires = sizeOfLinkedList(wires) - 2; //Num wires excluding one and zero
-	int upperBound = pow(2, numWires); //Upper bound of iteration for each input
 
-	for (int i = 0; i < numWires; i++) {
-		gateList = update_inputs(gateList, i);
-		for (int j = 0; j < upperBound; j++) {
-			gateList = compute_state(gateList);
-
-			if (is_stable(gateList) && j > 0) {
-				print_state(gateList, true);
-				break;
-			} else if (!is_stable(gateList) && j == upperBound - 1) {
-				print_state(gateList, false);
-				break;
-			}
-			gateList = assign_next_state(gateList);
-		}
-		reset_wires(wires);
-		printf("\n");
-	}
 
 	freeLinkedList(wires);
 	freeArrayList(gateList);

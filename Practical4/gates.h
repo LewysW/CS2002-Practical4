@@ -53,8 +53,9 @@ void reset_wires(Node head);
 ArrayList assign_next_state(ArrayList gateList);
 bool is_stable(ArrayList gateList);
 void print_state(ArrayList gateList, bool isStable);
+void output_truth_table(ArrayList gateList);
 
-//Linked list functions - TODO - deleted unneccessary functions
+//Linked list functions - TODO - delete unneccessary functions
 Node createNode();
 Node addNode(Node head, Wire* wire);
 bool linkedListContains(Node head, char* nodeStr);

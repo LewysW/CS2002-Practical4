@@ -73,6 +73,7 @@ bool linkedListContains(Node head, char* nodeStr) {
     return false;
 }
 
+//TODO - rename get_wire
 Wire* getNode(Node head, char* nodeStr) {
     if (head == NULL) {
         return NULL;
