@@ -1,5 +1,5 @@
 circuits: circuits.o io.o linkedlist.o arraylist.o
-	gcc -std=c99 -Wall -Wextra -g circuits.o io.o linkedlist.o arraylist.o -o circuits
+	gcc -std=c99 -Wall -Wextra -g circuits.o io.o linkedlist.o arraylist.o -o circuits -lm
 
 io.o: io.c gates.h
 	 gcc -std=c99 -Wall -Wextra -g io.c -c -o io.o

@@ -45,17 +45,31 @@ Gate make_gate(char* output, char* operator, char* input1, char* input2);
 Wire* get_wire(char* wireStr);
 bool valid_operator(char* operator);
 bool valid_expression(char* expression[], ArrayList gateList);
+ArrayList compute_state(ArrayList gateList);
+ArrayList update_inputs(ArrayList gateList, int dec);
+int get_num_IN(ArrayList gateList);
+int* dec_to_binary(int dec, int numBits);
+void reset_wires(Node head);
+ArrayList assign_next_state(ArrayList gateList);
+bool is_stable(ArrayList gateList);
+void print_state(ArrayList gateList, bool isStable);
+
+//Linked list functions - TODO - deleted unneccessary functions
 Node createNode();
 Node addNode(Node head, Wire* wire);
-bool contains(Node head, char* nodeStr);
+bool linkedListContains(Node head, char* nodeStr);
 Wire* getNode(Node head, char* nodeStr);
 void printLinkedList(Node node);
-void freeList(Node node);
-void printList(Node node);
+void freeLinkedList(Node node);
+void printLinkedList(Node node);
+int sizeOfLinkedList(Node head);
+
+//ArrayList functions - TODO - deleted unneccessary functions
 ArrayList arrayListAdd(ArrayList list, Gate gate);
 ArrayList arrayListExpand(ArrayList list);
-ArrayList createList(int capacity);
+ArrayList createArrayList(int capacity);
 void printArrayList(ArrayList list);
-ArrayList compute_state(ArrayList gateList);
+void freeArrayList(ArrayList gateList);
+
 
 #endif

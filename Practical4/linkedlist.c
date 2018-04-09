@@ -55,14 +55,19 @@ Node addNode(Node head, Wire* wire) {
     return head;
 }
 
-bool contains(Node head, char* nodeStr) {
+int sizeOfLinkedList(Node head) {
+    if (head == NULL) return 0;
+    else return (sizeOfLinkedList(head->next) + 1);
+}
+
+bool linkedListContains(Node head, char* nodeStr) {
     if (head == NULL) {
         return false;
     } else {
         if (!strcmp(head->wire->name, nodeStr)) return true;
 
         Node newNode = head->next;
-        if (newNode != NULL) return contains(newNode, nodeStr);
+        if (newNode != NULL) return linkedListContains(newNode, nodeStr);
     }
 
     return false;
@@ -81,11 +86,21 @@ Wire* getNode(Node head, char* nodeStr) {
     return NULL;
 }
 
+//Resets value of wires to zero
+void reset_wires(Node head) {
+	if (head != NULL) {
+		head->wire->val = 0;
+		head->wire->nextVal = 0;
+
+		reset_wires(head->next);
+	}
+}
+
 //Recursively frees linked list
-void freeList(Node node) {
+void freeLinkedList(Node node) {
     Node newNode = node->next;
     free(node);
-    if (newNode != NULL) freeList(newNode);
+    if (newNode != NULL) freeLinkedList(newNode);
 }
 
 void printLinkedList(Node node) {

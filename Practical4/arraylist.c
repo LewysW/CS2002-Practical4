@@ -33,7 +33,7 @@ void printArrayList(ArrayList list) {
 
 
 ArrayList arrayListExpand(ArrayList list) {
-    ArrayList newList = createList(list.capacity + 100);
+    ArrayList newList = createArrayList(list.capacity + 100);
 
     for (int i = 0; i < list.size; i++) {
         newList.gates[i] = list.gates[i];
@@ -42,7 +42,7 @@ ArrayList arrayListExpand(ArrayList list) {
     return newList;
 }
 
-ArrayList createList(int capacity) {
+ArrayList createArrayList(int capacity) {
     if (capacity <= 0) capacity = DEFAULT_CAPACITY;
 
     ArrayList list;
@@ -51,4 +51,12 @@ ArrayList createList(int capacity) {
     list.gates = malloc(capacity * sizeof(Gate));
 
     return list;
+}
+
+void freeArrayList(ArrayList list) {
+    for (int i = 0; i < list.size; i++) {
+        free(list.gates[i].op);
+    }
+
+    free(list.gates);
 }

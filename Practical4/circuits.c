@@ -1,9 +1,10 @@
-#define _GNU_SOURCE
+#define _GNU_SOURCE //Included to avoid implicit getline declaration
 
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <math.h>
 #include "gates.h"
 
 //Sets vals for one and zero wires
@@ -22,8 +23,9 @@ Wire* make_wire(char* str, int val) {
 	return wire;
 }
 
+
 Wire* get_wire(char* wireStr) {
-	if (!contains(wires, wireStr)) {
+	if (!linkedListContains(wires, wireStr)) {
 		Wire* wire = make_wire(wireStr, 0);
 		wires = addNode(wires, wire);
 		return wire;
@@ -43,12 +45,10 @@ Gate make_gate(char* output, char* operator, char* input1, char* input2) {
     gate.op = strdup(operator);
 
 	if (strcmp(operator, "IN")) {
-		gate.input1 = malloc(sizeof(Wire));
 		gate.input1 = get_wire(input1);
 	}
 
     if (strcmp(operator, "NOT") && strcmp(operator, "IN")) {
-		gate.input2 = malloc(sizeof(Wire));
 		gate.input2 = get_wire(input2);
 	}
 
@@ -59,7 +59,6 @@ Gate make_gate(char* output, char* operator, char* input1, char* input2) {
 
 //Gets the output of a gate based on the operator name
 int get_output(Gate prev) {
-    int val;
 	Gate gate = prev;
 
     if (!strcmp(gate.op, "NOT")) return !(gate.input1->val);
@@ -70,7 +69,7 @@ int get_output(Gate prev) {
     else if (!strcmp(gate.op, "XOR")) return (gate.input1->val ^ gate.input2->val);
     else if (!strcmp(gate.op, "EQ")) return !(gate.input1->val ^ gate.input2->val);
 	else if (!strcmp(gate.op, "IN")) return gate.output->val;
-	//TODO - change IN for all combinations of inputs
+
 	return -1;
 }
 
@@ -79,11 +78,74 @@ ArrayList compute_state(ArrayList gateList) {
 		gateList.gates[i].output->nextVal = get_output(gateList.gates[i]);
 	}
 
+	return gateList;
+}
+
+ArrayList assign_next_state(ArrayList gateList) {
 	for (int i = 0; i < gateList.size; i++) {
 		gateList.gates[i].output->val = gateList.gates[i].output->nextVal;
 	}
+	return gateList;
+}
+
+void print_state(ArrayList gateList, bool isStable) {
+	for (int i = 0; i < gateList.size; i++) {
+		if (!strcmp(gateList.gates[i].op, "IN")) {
+			printf("%d ", gateList.gates[i].output->val);
+		} else if(!strcmp(gateList.gates[i].output->name, "out")) {
+			if (isStable) printf("%d", gateList.gates[i].output->val);
+			else printf("?");
+		}
+	}
+
+	printf("\n");
+}
+
+ArrayList update_inputs(ArrayList gateList, int dec) {
+	int* inputs;
+	inputs = dec_to_binary(dec, get_num_IN(gateList));
+	int bit = 0;
+
+	for (int i = 0; i < gateList.size; i++) {
+		if (!strcmp(gateList.gates[i].op, "IN")) {
+			gateList.gates[i].output->val = *(inputs + (bit++));
+		}
+	}
 
 	return gateList;
+}
+
+bool is_stable(ArrayList gateList) {
+	for (int i = 0; i < gateList.size; i++) {
+		if ((gateList.gates[i].output->val) != (gateList.gates[i].output->nextVal)) return false;
+	}
+
+	return true;
+}
+
+
+int* dec_to_binary(int dec, int numBits) {
+	//Gets number of bits using logarithms
+	int* binary = calloc(numBits, sizeof(int));
+
+	for (int i = 0; i < numBits; i++) binary[i] = 0;
+
+	for (int i = numBits - 1; dec > 0; i--) {
+		binary[i] = dec % 2;
+		dec = dec / 2;
+	}
+
+	return binary;
+}
+
+int get_num_IN(ArrayList gateList) {
+	int numIN = 0;
+
+	for (int i = 0; i < gateList.size; i++) {
+		if (!strcmp(gateList.gates[i].op, "IN")) numIN++;
+	}
+
+	return numIN;
 }
 
 
@@ -94,7 +156,7 @@ ArrayList compute_state(ArrayList gateList) {
 int main(void) {
 
 	//Creates a custom array list to store the gates
-	ArrayList gateList = createList(DEFAULT_CAPACITY);
+	ArrayList gateList = createArrayList(DEFAULT_CAPACITY);
 	wires = addNode(wires, one);
 	wires = addNode(wires, zero);
 
@@ -103,7 +165,6 @@ int main(void) {
 	size_t len = 0;
 	int index = 0;
 
-	//TODO - CHANGE stdin TO STREAM TO ALLOW FOR EITHER USER INPUT OR FILE IO
 	while (getline(&line, &len, stdin) != -1) {
 		inputs = malloc(sizeof(char*) * NUM_TOKENS);
 		tokenize_line(line, inputs);
@@ -113,18 +174,37 @@ int main(void) {
 		} else {
 			printf("Invalid Input\n");
 		}
+
+		free(line);
+		free(inputs);
 	}
 
 	//TODO - change loop condition for stabilisation or upper bound of iterations
-	while (index < 20) {
-		gateList = compute_state(gateList);
-		printf("%s: %d\n", gateList.gates[index % 4].output->name ,gateList.gates[index % 4].output->val);
-		index++;
+	//TODO - print properly (display 0 or ? if no out value)
+	//TODO - separate code into files
+	//TODO - comments
+	int numWires = sizeOfLinkedList(wires) - 2; //Num wires excluding one and zero
+	int upperBound = pow(2, numWires); //Upper bound of iteration for each input
+
+	for (int i = 0; i < numWires; i++) {
+		gateList = update_inputs(gateList, i);
+		for (int j = 0; j < upperBound; j++) {
+			gateList = compute_state(gateList);
+
+			if (is_stable(gateList) && j > 0) {
+				print_state(gateList, true);
+				break;
+			} else if (!is_stable(gateList) && j == upperBound - 1) {
+				print_state(gateList, false);
+				break;
+			}
+			gateList = assign_next_state(gateList);
+		}
+		reset_wires(wires);
+		printf("\n");
 	}
 
-	free(inputs);
-	printLinkedList(wires);
-	printArrayList(gateList);
-	free(line);
+	freeLinkedList(wires);
+	freeArrayList(gateList);
     return 0;
 }

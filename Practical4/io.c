@@ -7,7 +7,7 @@
 const char* VALID_OPERATORS[8] = {"NOT", "AND", "OR", "NAND", "NOR", "XOR", "EQ", "IN"};
 //Gets maximum of four tokens from input line
 void tokenize_line(char* line, char* inputs[]) {
-	const char seps[3] = "  \n";
+	const char seps[2] = " \n";
 	int index = 0;
 
 	for (int i = 0; i < NUM_TOKENS; i++) {
@@ -15,7 +15,7 @@ void tokenize_line(char* line, char* inputs[]) {
 	}
 
 	inputs[index++] = strtok(line, seps);
-	while ((inputs[index++] = strtok(NULL, seps)) != NULL);
+	while (((inputs[index++] = strtok(NULL, seps)) != NULL) && index <= NUM_TOKENS);
 }
 
 //Checks that an operator is valid
@@ -29,7 +29,7 @@ bool valid_operator(char* operator) {
 
 //Checks that an expression is valid
 bool valid_expression(char* expression[], ArrayList gateList) {
-	if (!valid_operator(expression[OPERATOR])) return false;
+	if (expression[OPERATOR] == NULL || !valid_operator(expression[OPERATOR])) return false;
 
 	if (!strcmp(expression[OUTPUT], "one") || !strcmp(expression[OUTPUT], "zero")) return false;
 
@@ -41,6 +41,8 @@ bool valid_expression(char* expression[], ArrayList gateList) {
 				return false;
 		}
 	}
+
+	if (strcmp("IN", expression[OPERATOR]) && strcmp("NOT", expression[OPERATOR]) && (expression[INPUT_ONE] == NULL || expression[INPUT_TWO] == NULL)) return false;
 
 	if (!strcmp("IN", expression[OPERATOR]) && expression[INPUT_ONE] != NULL) return false;
 
