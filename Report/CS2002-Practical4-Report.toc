@@ -1,0 +1,15 @@
+\contentsline {section}{\numberline {1}Overview}{3}
+\contentsline {section}{\numberline {2}Design and Implementation}{3}
+\contentsline {subsubsection}{\numberline {2.0.1}Files and Libraries}{3}
+\contentsline {subsection}{\numberline {2.1}Index Based}{5}
+\contentsline {subsubsection}{\numberline {2.1.1}Summary}{5}
+\contentsline {subsubsection}{\numberline {2.1.2}Data Structures}{5}
+\contentsline {subsection}{\numberline {2.2}Pointer Based}{5}
+\contentsline {subsubsection}{\numberline {2.2.1}Summary}{5}
+\contentsline {subsubsection}{\numberline {2.2.2}Data Structures}{6}
+\contentsline {section}{\numberline {3}Testing}{7}
+\contentsline {subsection}{\numberline {3.1}Input Validation}{7}
+\contentsline {subsection}{\numberline {3.2}Gathering Columns}{9}
+\contentsline {subsection}{\numberline {3.3}Dealing Cards}{10}
+\contentsline {section}{\numberline {4}Conclusion and Evaluation}{11}
+\contentsline {section}{\numberline {5}Extensions}{11}
