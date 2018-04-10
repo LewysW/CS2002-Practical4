@@ -55,17 +55,27 @@ Node addNode(Node head, Wire* wire) {
     return head;
 }
 
+/*Counts size of linked list
+@head - first node of list
+*/
 int sizeOfLinkedList(Node head) {
     if (head == NULL) return 0;
     else return (sizeOfLinkedList(head->next) + 1);
 }
 
+/*Returns boolean signifying whether wire with given name is in linked list.
+@head - first node of linked list.
+@nodeStr - wire to find.
+*/
 bool linkedListContains(Node head, char* nodeStr) {
+    //If first element equals NULL (before wire is found) return false
     if (head == NULL) {
         return false;
     } else {
+        //If nodeStr matches wire name then return true
         if (!strcmp(head->wire->name, nodeStr)) return true;
 
+        //Recursively call function until equal to nodeStr or NULL
         Node newNode = head->next;
         if (newNode != NULL) return linkedListContains(newNode, nodeStr);
     }
@@ -73,29 +83,40 @@ bool linkedListContains(Node head, char* nodeStr) {
     return false;
 }
 
-//TODO - rename get_wire
+/*Gets a node given a node's name
+@head - first node in list
+@nodeStr - name of node
+*/
 Wire* getNode(Node head, char* nodeStr) {
+    //Returns NULL if head is NULL
     if (head == NULL) {
         return NULL;
     } else {
         Node newNode = head->next;
+
+        //Returns wire if found
         if (!strcmp(head->wire->name, nodeStr)) return (head->wire);
 
+        //Recursively calls getNode until found or NULL
         if (newNode != NULL) return getNode(newNode, nodeStr);
     }
 
     return NULL;
 }
 
-//Resets value of wires to zero
+/*Resets value and next value of wire if wire is not 'one'
+@head - first node of linked list
+*/
 void reset_wires(Node head) {
+    //If head is not NULL
 	if (head != NULL) {
-        //Skips reseting of one
+        //Skips reseting of wire if name is one
         if (strcmp(head->wire->name, "one")) {
             head->wire->val = 0;
     		head->wire->nextVal = 0;
         }
 
+        //recursively reset wires
 		reset_wires(head->next);
 	}
 }
@@ -105,11 +126,4 @@ void freeLinkedList(Node node) {
     Node newNode = node->next;
     free(node);
     if (newNode != NULL) freeLinkedList(newNode);
-}
-
-void printLinkedList(Node node) {
-    if (node != NULL) {
-        Node newNode = node->next;
-        if (newNode != NULL) printLinkedList(newNode);
-    }
 }

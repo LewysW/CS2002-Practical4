@@ -166,9 +166,6 @@ int* dec_to_binary(int dec, int numBits) {
 	//Allocate space for each bit based on numBits (calloc sets memory to zero)
 	int* binary = calloc(numBits, sizeof(int));
 
-	//Set bits to initial values of zero.
-	for (int i = 0; i < numBits; i++) binary[i] = 0;
-
 	//Iterate while decimal number is greater than 0 and set bits from right to left
 	for (int i = numBits - 1; dec > 0; i--) {
 		//Get bit (0 if dec is even, 1 if dec is odd)
