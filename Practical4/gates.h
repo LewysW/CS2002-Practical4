@@ -41,7 +41,7 @@ typedef struct LinkedList* Node;
 //Struct representing ArrayList
 typedef struct ArrayList {
     //Array of gates
-    Gate *gates;
+    Gate* gates;
     //Size of array list
     int size;
     //capacity of array list (number of elements in *gates)

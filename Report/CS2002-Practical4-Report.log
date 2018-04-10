@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2018.4.5)  10 APR 2018 17:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2018.4.5)  10 APR 2018 18:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -157,182 +157,161 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \openout3 = `CS2002-Practical4-Report.toc'.
 
  [2]
-Underfull \hbox (badness 10000) in paragraph at lines 18--19
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 24.
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 18--19
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 18--19
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 20--21
-
- []
-
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 23.
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 23.
- [3]
-<images/Email.png, id=18, 551.05875pt x 629.35126pt>
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 24.
+ [3] [4]
+<images/Email.png, id=22, 551.05875pt x 629.35126pt>
 File: images/Email.png Graphic file (type png)
  <use images/Email.png>
-Package pdftex.def Info: images/Email.png used on input line 38.
+Package pdftex.def Info: images/Email.png used on input line 66.
 (pdftex.def)             Requested size: 220.41959pt x 251.73604pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--43
+Underfull \hbox (badness 10000) in paragraph at lines 70--71
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--43
+Underfull \hbox (badness 10000) in paragraph at lines 70--71
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--43
+Underfull \hbox (badness 10000) in paragraph at lines 70--71
 
  []
 
-[4 <./images/Email.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 59--59
+[5 <./images/Email.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 87--87
 [][]\OT1/cmr/m/n/8 https://www.hackerearth.com/practice/data-structures/linked-
 list/singly-linked-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--61
+Underfull \hbox (badness 10000) in paragraph at lines 87--89
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--61
+Underfull \hbox (badness 10000) in paragraph at lines 87--89
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--61
+Underfull \hbox (badness 10000) in paragraph at lines 87--89
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--61
+Underfull \hbox (badness 10000) in paragraph at lines 87--89
 
  []
 
-[5] [6] <images/IndexInvalidInput.png, id=34, 733.74126pt x 352.31625pt>
+[6] <images/IndexInvalidInput.png, id=34, 733.74126pt x 352.31625pt>
 File: images/IndexInvalidInput.png Graphic file (type png)
 
 <use images/IndexInvalidInput.png>
-Package pdftex.def Info: images/IndexInvalidInput.png used on input line 92.
+Package pdftex.def Info: images/IndexInvalidInput.png used on input line 120.
 (pdftex.def)             Requested size: 330.18051pt x 158.54083pt.
-
-<images/IndexValidInput.png, id=35, 472.76625pt x 510.90875pt>
+ [7]
+<images/IndexValidInput.png, id=39, 472.76625pt x 510.90875pt>
 File: images/IndexValidInput.png Graphic file (type png)
 
 <use images/IndexValidInput.png>
-Package pdftex.def Info: images/IndexValidInput.png used on input line 98.
+Package pdftex.def Info: images/IndexValidInput.png used on input line 126.
 (pdftex.def)             Requested size: 189.10315pt x 204.35988pt.
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<images/IndexWhitespaceValid.png, id=36, 423.5825pt x 541.02126pt>
+<images/IndexWhitespaceValid.png, id=40, 423.5825pt x 541.02126pt>
 File: images/IndexWhitespaceValid.png Graphic file (type png)
 
 <use images/IndexWhitespaceValid.png>
-Package pdftex.def Info: images/IndexWhitespaceValid.png used on input line 104
+Package pdftex.def Info: images/IndexWhitespaceValid.png used on input line 132
 .
 (pdftex.def)             Requested size: 152.48958pt x 194.7675pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[7 <./images/IndexInvalidInput.png>] [8 <./images/IndexValidInput.png> <./image
+[8 <./images/IndexInvalidInput.png> <./images/IndexValidInput.png>] [9 <./image
 s/IndexWhitespaceValid.png>]
-<images/Gather.png, id=47, 438.63875pt x 620.3175pt>
+<images/Gather.png, id=50, 438.63875pt x 620.3175pt>
 File: images/Gather.png Graphic file (type png)
  <use images/Gather.png>
-Package pdftex.def Info: images/Gather.png used on input line 111.
+Package pdftex.def Info: images/Gather.png used on input line 139.
 (pdftex.def)             Requested size: 219.31883pt x 310.15799pt.
 
-[9
+[10
 
- <./images/Gather.png>] <images/Deal.png, id=52, 421.575pt x 633.36626pt>
+ <./images/Gather.png>] <images/Deal.png, id=55, 421.575pt x 633.36626pt>
 File: images/Deal.png Graphic file (type png)
 
 <use images/Deal.png>
-Package pdftex.def Info: images/Deal.png used on input line 118.
+Package pdftex.def Info: images/Deal.png used on input line 146.
 (pdftex.def)             Requested size: 210.78697pt x 316.68236pt.
- [10
+ [11
 
  <./images/Deal.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 122--123
+Underfull \hbox (badness 10000) in paragraph at lines 150--151
 
  []
 
-<images/ValGrind.png, id=57, 689.57625pt x 218.8175pt>
+<images/ValGrind.png, id=60, 689.57625pt x 218.8175pt>
 File: images/ValGrind.png Graphic file (type png)
 
 <use images/ValGrind.png>
-Package pdftex.def Info: images/ValGrind.png used on input line 126.
+Package pdftex.def Info: images/ValGrind.png used on input line 154.
 (pdftex.def)             Requested size: 344.78728pt x 109.40848pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 134--135
+Underfull \hbox (badness 10000) in paragraph at lines 162--163
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 134--135
+Underfull \hbox (badness 10000) in paragraph at lines 162--163
 
  []
 
-[11 <./images/ValGrind.png>] <images/Repeat.png, id=62, 447.6725pt x 457.71pt>
+[12 <./images/ValGrind.png>] <images/Repeat.png, id=65, 447.6725pt x 457.71pt>
 File: images/Repeat.png Graphic file (type png)
 
 <use images/Repeat.png>
-Package pdftex.def Info: images/Repeat.png used on input line 141.
+Package pdftex.def Info: images/Repeat.png used on input line 169.
 (pdftex.def)             Requested size: 223.8357pt x 228.85445pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 147--148
+Underfull \hbox (badness 10000) in paragraph at lines 175--176
 \OT1/cmr/m/n/10 https://www.hackerearth.com/practice/data-structures/linked-lis
 t/singly-
  []
 
-[12 <./images/Repeat.png>] (./CS2002-Practical4-Report.aux) ) 
+[13 <./images/Repeat.png>] (./CS2002-Practical4-Report.aux) ) 
 Here is how much of TeX's memory you used:
  1555 strings out of 493039
  22742 string characters out of 6136944
- 84612 words of memory out of 5000000
+ 82612 words of memory out of 5000000
  5092 multiletter control sequences out of 15000+600000
  8241 words of font info for 29 fonts, out of 8000000 for 9000
  1137 hyphenation exceptions out of 8191
- 38i,8n,23p,1584b,235s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,8n,23p,1584b,239s stack positions out of 5000i,500n,10000p,200000b,80000s
  </usr/share/texli
 ve/texmf-dist/fonts/pk/ljfour/public/cm/dpi600/cmti10.pk> </usr/share/texlive/t
 exmf-dist/fonts/pk/ljfour/public/cm/dpi600/cmr8.pk> </usr/share/texlive/texmf-d
 ist/fonts/pk/ljfour/public/cm/dpi600/cmr6.pk> </usr/share/texlive/texmf-dist/fo
-nts/pk/ljfour/public/cm/dpi600/cmr7.pk> </cs/home/locw/.cache/texlive/texmf-var
-/fonts/pk/ljfour/public/cm/cmbx12.600pk> </usr/share/texlive/texmf-dist/fonts/p
-k/ljfour/public/cm/dpi600/cmsy10.pk> </usr/share/texlive/texmf-dist/fonts/pk/lj
+nts/pk/ljfour/public/cm/dpi600/cmr7.pk> </usr/share/texlive/texmf-dist/fonts/pk
+/ljfour/public/cm/dpi600/cmsy10.pk> </cs/home/locw/.cache/texlive/texmf-var/fon
+ts/pk/ljfour/public/cm/cmbx12.600pk> </usr/share/texlive/texmf-dist/fonts/pk/lj
 four/public/cm/dpi600/cmbx10.pk> </cs/home/locw/.cache/texlive/texmf-var/fonts/
 pk/ljfour/public/cm/cmbx12.720pk> </usr/share/texlive/texmf-dist/fonts/pk/ljfou
 r/public/cm/dpi600/cmr10.pk> </usr/share/texlive/texmf-dist/fonts/pk/ljfour/pub
 lic/cm/dpi600/cmr12.pk> </usr/share/texlive/texmf-dist/fonts/pk/ljfour/public/c
 m/dpi600/cmr17.pk>
-Output written on CS2002-Practical4-Report.pdf (12 pages, 303532 bytes).
+Output written on CS2002-Practical4-Report.pdf (13 pages, 307740 bytes).
 PDF statistics:
- 364 PDF objects out of 1000 (max. 8388607)
- 73 compressed objects within 1 object stream
+ 375 PDF objects out of 1000 (max. 8388607)
+ 76 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  41 words of extra memory for PDF output out of 10000 (max. 10000000)
 
