@@ -2,59 +2,57 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <math.h>
 #include "gates.h"
 
 
 const char* VALID_OPERATORS[8] = {"NOT", "AND", "OR", "NAND", "NOR", "XOR", "EQ", "IN"};
 
 void output_truth_table(ArrayList gateList) {
-	int numWires = sizeOfLinkedList(wires) - 2; //Num wires excluding one and zero
-	int upperBound = pow(2, numWires); //Upper bound of iteration for each input
-
-	//TODO - MOVE - Prints variable name
-	for (int i = 0; i < gateList.size; i++) {
-		if (!strcmp(gateList.gates[i].op, "IN")) {
-			printf("%s ", gateList.gates[i].output->name);
-		}
-	}
-
-	//TODO - MOVE - checks for out for final output
+	print_wire_attributes(gateList, "name");
 	bool containsOut = linkedListContains(wires, "out");
 	if (containsOut) printf("out");
 	printf("\n");
 
-	//TODO - increments over inputs and checks if stable
-	int num_possibility = pow(2, get_num_IN(gateList));
-	for (int i = 0; i < num_possibility; i++) {
-		bool stable = false;
+	//increments over inputs and checks if stable
+	int numInputs = pow(2, get_num_IN(gateList));
+	for (int i = 0; i < numInputs; i++) {
 		//Updates inputs with new bits
 		gateList = update_inputs(gateList, i);
 
-		//TODO - MOVE -Outputs bits of each IN being tested
-		for (int i = 0; i < gateList.size; i++) {
-			if (!strcmp(gateList.gates[i].op, "IN")) {
-				printf("%d ", gateList.gates[i].output->val);
-			}
-		}
-
-		//TODO - MOVE - computes the next state and checks if stable
-		for (int j = 0; j < upperBound; j++) {
-			gateList = compute_state(gateList);
-
-			stable = is_stable(gateList);
-			if (stable) break;
-			gateList = assign_next_state(gateList);
-		}
-
-		//TODO - MOve - prints value of out, 0 or ?
-		if(stable) {
-			if(containsOut) printf("%d\n", getNode(wires, "out")->val);
-			else printf("0\n");
-		}
-		else printf("?\n");
+		print_wire_attributes(gateList, "val");
+		bool stable = stabilise_circuit(gateList);
+		print_circuit_output(stable, containsOut);
 		reset_wires(wires);
 	}
+}
+
+void print_circuit_output(bool stable, bool containsOut) {
+	if(stable) {
+		if(containsOut) printf("%d\n", getNode(wires, "out")->val);
+		else printf("0\n");
+	} else printf("?\n");
+}
+
+void print_wire_attributes(ArrayList gateList, char* attr) {
+	for (int i = 0; i < gateList.size; i++) {
+		if (!strcmp(gateList.gates[i].op, "IN")) {
+			if (!strcmp(attr, "name")) printf("%s ", gateList.gates[i].output->name);
+			else if (!strcmp(attr, "val")) printf("%d ", gateList.gates[i].output->val);
+		}
+	}
+}
+
+void print_state(ArrayList gateList, bool isStable) {
+	for (int i = 0; i < gateList.size; i++) {
+		if (!strcmp(gateList.gates[i].op, "IN")) {
+			printf("%d ", gateList.gates[i].output->val);
+		} else if(!strcmp(gateList.gates[i].output->name, "out")) {
+			if (isStable) printf("%d", gateList.gates[i].output->val);
+			else printf("?");
+		}
+	}
+
+	printf("\n");
 }
 
 //Gets maximum of four tokens from input line
@@ -79,7 +77,7 @@ bool valid_operator(char* operator) {
 	return false;
 }
 
-//TODO - mentioned as extension
+//TODO - mention as extension
 //Checks that an expression is valid
 bool valid_expression(char* expression[], ArrayList gateList) {
 	if (expression[OPERATOR] == NULL || !valid_operator(expression[OPERATOR])) return false;

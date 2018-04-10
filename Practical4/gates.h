@@ -38,22 +38,30 @@ typedef struct ArrayList {
 
 Node wires;
 
-Wire* make_wire(char* str, int value);
+//Circuits.c
+Wire* make_wire(char* str, int value); //COMMENTED
+Wire* get_wire(char* wireStr); //COMMENTED
+Gate make_gate(char* output, char* operator, char* input1, char* input2); //COMMENTED
+int get_output(Gate prev); //COMMENTED
+ArrayList compute_state(ArrayList gateList); //COMMENTED
+ArrayList update_inputs(ArrayList gateList, int dec); //COMMENTED
+bool is_stable(ArrayList gateList); //COMMENTED
+int* dec_to_binary(int dec, int numBits); //COMMENTED
+int get_num_IN(ArrayList gateList);//COMMENTED
+ArrayList generate_circuit(ArrayList gateList);//COMMENTED
+bool stabilise_circuit(ArrayList gateList);//COMMENTED
+
 void tokenize_line(char* line, char* inputs[]);
-int get_output(Gate prev);
-Gate make_gate(char* output, char* operator, char* input1, char* input2);
-Wire* get_wire(char* wireStr);
 bool valid_operator(char* operator);
 bool valid_expression(char* expression[], ArrayList gateList);
-ArrayList compute_state(ArrayList gateList);
-ArrayList update_inputs(ArrayList gateList, int dec);
 int get_num_IN(ArrayList gateList);
-int* dec_to_binary(int dec, int numBits);
 void reset_wires(Node head);
 ArrayList assign_next_state(ArrayList gateList);
-bool is_stable(ArrayList gateList);
 void print_state(ArrayList gateList, bool isStable);
 void output_truth_table(ArrayList gateList);
+void print_wire_attributes(ArrayList gateList, char* attr);
+void print_circuit_output(bool stable, bool containsOut);
+bool stabilise_circuit(ArrayList gateList);
 
 //Linked list functions - TODO - delete unneccessary functions
 Node createNode();
