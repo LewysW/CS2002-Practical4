@@ -216,9 +216,6 @@ ArrayList generate_circuit(ArrayList gateList) {
 		//If expression is valid, add gate to circuit.
 		if (valid_expression(inputs, gateList)) {
 			gateList = arrayListAdd(gateList, make_gate(*(inputs + OUTPUT), *(inputs + OPERATOR), *(inputs + INPUT_ONE), *(inputs + INPUT_TWO)));
-		} else {
-			//Otherwise print invalid input
-			printf("Invalid Input\n");
 		}
 
 		//Free line and input pointers

@@ -38,7 +38,7 @@ typedef struct ArrayList {
 
 Node wires;
 
-//Circuits.c
+//circuits.c
 Wire* make_wire(char* str, int value); //COMMENTED
 Wire* get_wire(char* wireStr); //COMMENTED
 Gate make_gate(char* output, char* operator, char* input1, char* input2); //COMMENTED
@@ -51,16 +51,19 @@ int get_num_IN(ArrayList gateList);//COMMENTED
 ArrayList generate_circuit(ArrayList gateList);//COMMENTED
 bool stabilise_circuit(ArrayList gateList);//COMMENTED
 
-void tokenize_line(char* line, char* inputs[]);
-bool valid_operator(char* operator);
-bool valid_expression(char* expression[], ArrayList gateList);
-int get_num_IN(ArrayList gateList);
+//io.c
+void output_truth_table(ArrayList gateList); //COMMENTED
+void print_circuit_output(bool stable, bool containsOut);//COMMENTED
+void print_wire_attributes(ArrayList gateList, char* attr);//COMMENTED
+void tokenize_line(char* line, char* inputs[]);//COMMENTED
+bool valid_operator(char* operator);//COMMENTED
+bool valid_expression(char* expression[], ArrayList gateList);//COMMENTED
+
+//linkedlist.c
+
+
 void reset_wires(Node head);
 ArrayList assign_next_state(ArrayList gateList);
-void print_state(ArrayList gateList, bool isStable);
-void output_truth_table(ArrayList gateList);
-void print_wire_attributes(ArrayList gateList, char* attr);
-void print_circuit_output(bool stable, bool containsOut);
 bool stabilise_circuit(ArrayList gateList);
 
 //Linked list functions - TODO - delete unneccessary functions

@@ -90,8 +90,11 @@ Wire* getNode(Node head, char* nodeStr) {
 //Resets value of wires to zero
 void reset_wires(Node head) {
 	if (head != NULL) {
-		head->wire->val = 0;
-		head->wire->nextVal = 0;
+        //Skips reseting of one
+        if (strcmp(head->wire->name, "one")) {
+            head->wire->val = 0;
+    		head->wire->nextVal = 0;
+        }
 
 		reset_wires(head->next);
 	}
