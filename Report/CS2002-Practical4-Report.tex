@@ -47,105 +47,52 @@
 						\item \textbf{capacity} - stores the number of locations in the gates (size cannot exceed capacity).
 					\end{itemize}
 			\end{itemize}
-		\subsubsection{Files and Libraries}
+		\subsection{Files and Libraries}
 				\begin{itemize}
-					\item \textbf{circuits.c} - This file contains the main function of the program which coordinates the sequence of operations. This file also contains the functions that directly relate to the creation and manipulation of the wires and gates such as creating wires and gates, generating the circuit, generating inputs to the circuit, evaluating the circuit and computing the next state, as well as stabilising the circuit. This file is also where the fixed value wires 'one' and 'zero' are declared.
+					\item \textbf{circuits.c} - This file contains the main function of the program which coordinates the sequence of operations. This file also contains the functions that directly relate to the creation and manipulation of the wires and gates such as creating wires and gates, generating the circuit, generating inputs to the circuit (by converting decimal numbers to binary) \footnote{https://www.javatpoint.com/c-program-to-convert-decimal-to-binary}, evaluating the circuit and computing the next state, as well as stabilising the circuit. This file is also where the fixed value wires 'one' and 'zero' are declared.
 					\item \textbf{io.c} - Handles the input and output of the system. The functions contained within this file include the likes of outputting the truth table of the circuit, tokenizing the file/console input, as well as parsing the file/console input and validating it. Also contained within the file is a constant array of strings which stores all of the valid operators (NOT, AND, OR, NAND, NOR, XOR, EQ and IN).
 					\item \textbf{linkedlist.c} - This file contains functions that operate on the linked list of wires in the program. This file is similar to the linkedlist file used in the CardTrick practical, only now the linked list has been adapted to store wires instead of cards and has had some additional functions defined. Functions in this file include those to create new nodes, add nodes to the linked list, get the size of the linked list, check if the linked list contains some value, get a node from the list with some given value, reset all of the values in the list, and finally freeing nodes of the list.
-					\item \textbf{arraylist.c} - This file contains functions that operate on the array list storing the gates of the circuit in the program.
-					\item \textbf{readmymind.h} - Contains definitions for the size of data structure dimensions (e.g. COLUMN\_SIZE, SUIT\_SIZE), the structs representing the data structures, as well as for the signatures of functions used throughout the program.
-					\item \textbf{stdbool.h} - Used to allow true and false values to be returned when validating the user's input.
+					\item \textbf{arraylist.c} - This file contains functions that operate on the array list storing the gates of the circuit in the program. The functions of this file enable adding gate elements to the array list, expanding the array list if the size reaches the list's capacity, creating and initialising an array list, and freeing the memory used by an array list.
+					\item \textbf{circuits.h} - Contains definitions for the maximum number of tokens allowed in the program input, the index of each token (output, operator, input1 and input2) in the list of tokens, the default capacity for an array list, and the additional space to be allocated to an array list if its capacity is reached. The file also contains the definitions of the structs of each data structure (Wire, Gate, LinkedList, and ArrayList) as well as the declaration of the global 'wires' LinkedList and definitions for each function in the program.
+					\item \textbf{stdbool.h} - Used for intuitive true/false evaluations of conditions.
 					
 					\item \textbf{stdlib.h} - Used to set appropriate values to NULL as well as enabling the use of malloc and free.
 					
 					\item \textbf{stdio.h} - Used for input and output.
 					
-					\item \textbf{assert.h} - Used to terminate program if branches of code are reached that should be unreachable.
+					\item \textbf{string.h} - Used for the string functions necessary to parse the input tokens in io.c.
+					\item \textbf{math.h and \_GNU\_SOURCE} - math.h is required for the pow (power) function used to calculate the number of inputs to each circuit and the maximum number of iterations required to stabilise a circuit (if it can be stabilised). \_GNU\_SOURCE is included as math.h is no longer part of the stdlib according to gcc and so this definition must be included to properly import it as well as adding the -lm flag in the make file.
 					
-					\item \textbf{string.h} - Used for the strlen function to check if the size of the user's input is greater than a single character. Although not explicitly stated as one of the permitted libraries in the specification, Dr Fayed stated in a query that its use is permissible:
-					
-					\includegraphics[scale=0.4]{Email.png}
-				\end{itemize}
-		\subsection{Index Based}
-			\subsubsection{Summary}
-			Declares and initialises a deck array of 52 cards and uses it to fill a Columns struct of 21 cards (of 3 column structs of 7). The columns are filled by randomly generating a number (signifying a card to select from the deck) and checking an array of selected values to see if the card has already been picked. It does this until 21 cards have been selected. \\\\The user then inputs their chosen column (this data is validated using an array of valid inputs) and this value is converted to an integer format and is then used to gather the columns. The columns are gathered by assigning the selected column of the previous Columns struct to the middle Column struct of the new Columns struct. The other columns are then iterated over and assigned. \\\\Finally the Columns struct with the selected column in the middle is dealt to a new set of columns by iterating over each element in the new Columns struct and calculating which old element should be dealt. \\\\The above process of getting user input, gathering the cards, and dealing the cards is then repeated three times with the user's card being displayed at the end.
-			\subsubsection{Data Structures}
-				\begin{itemize}
-					\item \textbf{Card} - Has two integer attributes:
-						\begin{itemize}
-							\item \textbf{suit} - a number from 0 - 3 representing either spade, heart, diamond, or club.
-							\item \textbf{rank} - a number from 0 - 12 representing and Ace, 2, 3, 4, 5, 6, 7, 8, 9, Jack, Queen, or King respectively.
-						\end{itemize}
-					
-					\item \textbf{Deck} - Has one attribute 'cards' which is an array of type Card which has the size of the constant DECK\_SIZE (in the general case 52).
-					
-					\item \textbf{Column} - Like the Deck struct - has one attribute 'cards' which is an array of type Card which has the size of constant COLUMN\_SIZE (typically 7).
-					
-					\item \textbf{Columns} - Has an attribute 'column' which is an array of columns of size NUM\_COLUMNS (typically 3).
-				\end{itemize}
-		\subsection{Pointer Based}
-			\subsubsection{Summary}
-			The pointer based implementation has an additional C file '\textbf{linkedlist.c}' which has functions to interface with the linkedlist data structure declared in readmymind.h. These include functions to create and add nodes to a linked list as well as retrieve nodes from a linked list. In addition there is a function to free the memory occupied by nodes of a linked list to avoid memory leakage and a function to update the indices of a given linked list. \\\\A linked list implementation by HackerEarth\footnote{https://www.hackerearth.com/practice/data-structures/linked-list/singly-linked-list/tutorial/} was used to give an idea of how to implement a basic linked list data structure in C. \\\\ The pointer version uses almost the exact same process as described in section 2.1.1. Aside from the way the data structure is accessed during the trick, the main difference between the two implementations is the way that the user input and output works. In the pointer based implementation instead of accessing card icons to be displayed using a constant array, a switch statement containing print statements is used. \\\\Similarly, instead of storing a constant array of valid inputs and accessing it to validate the user's input, a switch statement is used for input validation. A switch statement rather than iteration is also used in the gather stage. While the implementation of these features is more elegant in the array based implementation, this alternate implementation demonstrates that arrays are not strictly necessary.
-			\\\\The pointer implementation shares a common Card struct with the index based implementation, however the other following structures differ in implementation:
-			\subsubsection{Data Structures}
-				\begin{itemize}
-					\item \textbf{Card} - Has two integer attributes:
-						\begin{itemize}
-							\item \textbf{suit} - a number from 0 - 3 representing either spade, heart, diamond, or club.
-							\item \textbf{rank} - a number from 0 - 12 representing and Ace, 2, 3, 4, 5, 6, 7, 8, 9, Jack, Queen, or King respectively.
-						\end{itemize}
-						
-					\item \textbf{LinkedList} - Has the following attributes: 
-						\begin{itemize}
-							\item \textbf{card} - Stores a Card attribute that can be thought of as the 'value' of the node (a card in the deck or columns).
-							\item \textbf{next} - A linkedlist pointer to the next node the in the list.
-							\item \textbf{index} - An integer signifying a node's position in its linkedlist - manually set and used so that it would be easier to translate the functions in the index/array based implementation into the pointer implementation.
-							
-							\item \textbf{chosen} - A boolean used when selecting the random 21 cards from the deck of cards to signify whether a particular card has already been selected.
-						\end{itemize}
-						
-					\item \textbf{Node} - A typedef that allows a LinkedList pointer to be declared using the keyword 'Node'.										
-					
-					\item \textbf{Deck} - A struct that has one attribute 'node' which is a LinkedList Node. Used to allow 52 nodes to be added, each of which stores a unique playing card.
-					
-					\item \textbf{Columns} - A struct that contains three Node attributes called 'first', 'second' and 'third'. Each attribute stores the heads of their respective linkedlists which represent the three columns of the card trick.
-				\end{itemize}
-				
+	\end{itemize}
 	\section{Testing}
-		The following is a sample of output generated from testing the implementations. The function scanf was used to get the input from the user and proved surprisingly robust given the limited scope of this program.
+		The following is a sample of output generated from testing the solution with various inputs. The sample also demonstrates the improved input validation when entering gates which was developed to satisfy the suggestion in the specification that more robust validation could be completed as an extension:
 			\subsection{Input Validation}
 				\begin{figure}[h!]
 				
-					\caption{Invalid inputs being validated. Includes multiple character input, character input larger than allocated memory for the input char*, invalid single character input, as well as some miscellaneous input.}
+					\caption{Demonstrates an error occurring when attempting to create more than 10 gates due to an issue with resizing the array list.}
 					\centering
-					\includegraphics[scale=0.45]{IndexInvalidInput.png}
+					\includegraphics[scale=0.5]{ArrayListResizeError.png}
 				\end{figure}
 				
 				\begin{figure}[h!]
-					\caption{Example of valid inputs being accepted. Valid inputs include the characters l, L, r, R, m, and M.}
+					\caption{Demonstrates inputting more than 10 gates after the array resizing error has been fixed. The bug was fixed by no longer freeing a piece of memory which the array itself need access to.}
 					\centering
-					\includegraphics[scale=0.4]{IndexValidInput.png}
+					\includegraphics[scale=0.6]{FixedArrayListResize.png}
 				\end{figure}
 				
 				\begin{figure}[h!]
-					\caption{Example of valid inputs being accepted with preceding white space (white space and new line characters do not effect the single character input).}
+					\caption{Example of dynamic messages being displayed when invalid inputs are entered by robust input validation implemented as an extension.}
 					\centering
-					\includegraphics[scale=0.36]{IndexWhitespaceValid.png}
+					\includegraphics[scale=0.6]{SuccessfulValidation.png}
 				\end{figure}
 			
 			\newpage \clearpage
-			\subsection{Gathering Columns}
+			\subsection{Generating Output/Truth Tables}
 				\begin{figure}[h!]
-					\caption{Output of the gather stage when the deal stage is commented out. The output shows that the correct centre column is assigned each time.}				\centering
-					\includegraphics[scale=0.5]{Gather.png}
+					\caption{Output of valid circuits being evaluated and truth tables being displayed where appropriate. The output clearly demonstrates that for circuits that do not stabilise, a '?' is displayed, and that for circuits that do stabilise but have no out wire, 0 is displayed. For circuits with an out wire, the values of the out wire are displayed, and for circuits with IN gates, these values are also displayed. The output also demonstrates the use of one of the constant wires (in this case 'one').}				\centering
+					\includegraphics[scale=0.5]{OutputOfValidInput.png}
 				\end{figure}
-			
-			\clearpage
-			\subsection{Dealing Cards}
-				\begin{figure}[h!]
-					\caption{Output of multiple deal stages when the user's card is the 3 of spades. This output clearly shows that the cards are correctly dealt left-to-right, top-to-bottom.}				\centering
-					\includegraphics[scale=0.5]{Deal.png}
-				\end{figure}
+		
 	\newpage
 	\section{Conclusion and Evaluation}
 	In conclusion the requirements specified in the practical document to develop a card trick program have been fully implemented using both an index based implementation as well as non-global pointer based solution utilising a linked list structure. The solutions also both follow the constraints specified in regard to the allowed libraries as well as both only using local instances of data structures. \\\\ To improve upon my solution I would re-implement the way the newColumns struct is initialised in the pointer implementation when the cards are gathered and dealt. The current implementation of the program leaks 1.5MB of memory due to unused allocated memory that was once pointed to by a Columns struct. Without the frees at the end of the main function the program initially had over 3MB of leaked memory. I attempted to free the original columns struct when newColumns is assigned in both the gather and deal functions to reduce the amount from 1.7MB to 0MB however this resulted in a segmentation fault and so I decided to permit some memory not being freed (this would be more of a problem if the trick is repeated many times).
@@ -158,11 +105,7 @@
 	
 	\section{Extensions}
 		\begin{itemize}
-			\item \textbf{Allow Repetition of Trick} - In both implementations a while loop has been added to the main method to allow the user to repeat the card trick if they input the characters 'Y' or 'y' with anything else signifying an exit character. This has been achieved through the addition of a function getUserChoice in the io.c file which similarly to the getUserCol function gets the user's choice. A value of true is returned from a subsequent function isValidChoice if either character is entered.
-				
-			\item \textbf{Improve Ouput} - Improved output has been implemented with the letters A, J, Q, and K being output for the ranks 0, 10, 11 and 12 respectively and unicode card icons are output for the suits 0, 1, 2, and 3. For the suits 1 and 2 (hearts and diamonds) ANSI character codes have been used to display the suit icons in the colour red. \\\\
-		
-			\item \textbf{Complexity Discussion} - It seems counter-intuitive to use pointers and a linked list for such an application due the natural way in which an index based solution can represent cards in columns. In addition to this, linked lists typically take O(n) time to traverse to access an element where as arrays are constant time, O(1), access using an index. The main argument for using linked lists in any application is the ability to dynamically reallocate the size of the data structure utilising it however in this application we know from the start what size data structures (decks and columns) we will be working with.
+			\item \textbf{Improved Input Validation} - 
 		\end{itemize}
 		
 		\begin{figure}[h]

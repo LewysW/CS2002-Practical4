@@ -1,4 +1,4 @@
-#include "gates.h"
+#include "circuits.h"
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>

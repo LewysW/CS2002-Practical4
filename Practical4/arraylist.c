@@ -1,7 +1,5 @@
-#include "gates.h"
-#include <stdio.h>
+#include "circuits.h"
 #include <stdlib.h>
-#include <string.h>
 
 /*Adds gate to arrayList
 @list - arrayList to add gate to.

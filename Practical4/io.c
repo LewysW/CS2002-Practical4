@@ -1,9 +1,9 @@
 #define _GNU_SOURCE
 #include <string.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
-#include "gates.h"
+#include <math.h>
+#include "circuits.h"
 
 //List of valid operators.
 const char* VALID_OPERATORS[8] = {"NOT", "AND", "OR", "NAND", "NOR", "XOR", "EQ", "IN"};
@@ -104,7 +104,6 @@ bool valid_operator(char* operator) {
 	return false;
 }
 
-//TODO - mention as extension
 //INPUT VALIDATION EXTENSION
 /*Validates entered expressions
 @expression[] - expression to validate.

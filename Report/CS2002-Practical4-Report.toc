@@ -2,16 +2,9 @@
 \contentsline {section}{\numberline {2}Design and Implementation}{3}
 \contentsline {subsection}{\numberline {2.1}Summary}{3}
 \contentsline {subsection}{\numberline {2.2}Data Structures}{3}
-\contentsline {subsubsection}{\numberline {2.2.1}Files and Libraries}{4}
-\contentsline {subsection}{\numberline {2.3}Index Based}{5}
-\contentsline {subsubsection}{\numberline {2.3.1}Summary}{5}
-\contentsline {subsubsection}{\numberline {2.3.2}Data Structures}{6}
-\contentsline {subsection}{\numberline {2.4}Pointer Based}{6}
-\contentsline {subsubsection}{\numberline {2.4.1}Summary}{6}
-\contentsline {subsubsection}{\numberline {2.4.2}Data Structures}{7}
-\contentsline {section}{\numberline {3}Testing}{7}
-\contentsline {subsection}{\numberline {3.1}Input Validation}{8}
-\contentsline {subsection}{\numberline {3.2}Gathering Columns}{10}
-\contentsline {subsection}{\numberline {3.3}Dealing Cards}{11}
-\contentsline {section}{\numberline {4}Conclusion and Evaluation}{12}
-\contentsline {section}{\numberline {5}Extensions}{12}
+\contentsline {subsection}{\numberline {2.3}Files and Libraries}{4}
+\contentsline {section}{\numberline {3}Testing}{5}
+\contentsline {subsection}{\numberline {3.1}Input Validation}{5}
+\contentsline {subsection}{\numberline {3.2}Generating Output/Truth Tables}{7}
+\contentsline {section}{\numberline {4}Conclusion and Evaluation}{8}
+\contentsline {section}{\numberline {5}Extensions}{8}

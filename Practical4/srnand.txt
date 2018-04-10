@@ -1,4 +1,0 @@
-s IN
-r IN
-out NAND s qbar
-qbar NAND r out

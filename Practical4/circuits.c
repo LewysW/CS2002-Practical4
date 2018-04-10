@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
-#include "gates.h"
+#include "circuits.h"
 
 //Sets vals for one and zero wires
 Wire zero_wire = (Wire){"zero", 0, 0};
@@ -215,8 +215,7 @@ ArrayList generate_circuit(ArrayList gateList) {
 			gateList = arrayListAdd(gateList, make_gate(*(inputs + OUTPUT), *(inputs + OPERATOR), *(inputs + INPUT_ONE), *(inputs + INPUT_TWO)));
 		}
 
-		//Free line and input pointers
-		free(line);
+		//Free input pointers
 		free(inputs);
 	}
 
@@ -272,8 +271,6 @@ int main(void) {
 
 	//Outputs truth table for circuit.
 	output_truth_table(gateList);
-
-	//TODO - comments
 
 	//Frees wires and circuit.
 	freeLinkedList(wires);
